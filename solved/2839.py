@@ -1,7 +1,9 @@
 # 점화식 dp[n] = min(dp[n-3] + 1, dp[n-5] + 1)
 # dp[3] == dp[5] == 1
+# prob : -1값 분류시 
 
 import sys
+
 n = int(sys.stdin.readline())
 
 if(n>=6):
