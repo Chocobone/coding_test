@@ -1,9 +1,7 @@
 import sys
-input = sys.stdin.readline
 
-a, x = map(int, input().split())
+num = list(map(int, sys.stdin.readline().split()))
+num.sort()
+print(*num)
 
-result = list(map(int, input().split()))
-for i in result:
-    if i < x:
-        print(i, end=' ')
+
