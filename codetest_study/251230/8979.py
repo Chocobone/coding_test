@@ -21,9 +21,11 @@ for i in range(1, n+1):
         if medal[i][1] != medal[k][1]:
             if medal[i][1] > medal[k][1]:
                 better_than_k += 1
+
         elif medal[i][2] != medal[k][2]:
             if medal[i][2] > medal[k][2]:
                 better_than_k += 1
+                
         elif medal[i][3] != medal[k][3]:
             if medal[i][3] > medal[k][3]:
                 better_than_k += 1
