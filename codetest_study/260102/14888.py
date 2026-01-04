@@ -6,7 +6,7 @@ input = sys.stdin.readline
 n = int(input())
 numbers = list(map(int, input().split()))
 # numbers.sort()
-sig = list(map(int, input().split()))
+plus, minus, mul, div = list(map(int, input().split()))
 
 def divide(num1, num2):
     if num1 > 0:
@@ -20,7 +20,7 @@ def divide(num1, num2):
 # 더하기, 뺴기, 곱하기, 나누기의 남은 숫자만큼 current_result를 갱신하며 재귀호출
 max_val = -10e9
 min_val = 10e9
-def dfs(index, current_result, add, sub, mul, div):
+def dfs(index, current_result, plus, minus, mul, div):
     global max_val, min_val
     if index == n:
         if max_val < current_result:
@@ -28,21 +28,21 @@ def dfs(index, current_result, add, sub, mul, div):
         if min_val > current_result:
             min_val = current_result
         return
-    if add > 0:
-        dfs(index + 1, current_result + numbers[index], add - 1, sub, mul, div)
-    if sub > 0:
-        dfs(index + 1, current_result - numbers[index], add, sub - 1, mul, div)
+    if plus > 0:
+        dfs(index + 1, current_result + numbers[index], plus - 1, minus, mul, div)
+    if minus > 0:
+        dfs(index + 1, current_result - numbers[index], plus, minus - 1, mul, div)
     if mul > 0:
-        dfs(index + 1, current_result * numbers[index], add, sub, mul - 1, div)
+        dfs(index + 1, current_result * numbers[index], plus, minus, mul - 1, div)
     if div > 0:
-        dfs(index + 1, divide(current_result, numbers[index]), add, sub, mul, div - 1)
+        dfs(index + 1, divide(current_result, numbers[index]), plus, minus, mul, div - 1)
 
-dfs(1, numbers[0], sig[0], sig[1], sig[2], sig[3])
+dfs(1, numbers[0], plus, minus, mul, div)
 print(max_val)
 print(min_val)
 
-# sol 1: 기본적으로 정렬 후 최대값 최소값 구하면 될듯(그리디)
-# 뒤의 숫자를 곱셈으로 최대한 크게 한 뒤 더하기와 빼기를 적절히 배치
+# sol 1: 기본적으로 정렬 후 최대값 최소값 구하면 될듯
+# 뒤의 숫자를 곱셈으로 최대한 크게 한 뒤 더하기와 빼기를 적절히 배치(그리디)
 # 계산 순서 : 무조건 앞에서부터 진행
 # 최대값 : 뺄셈 -> 나누기 -> 더하기 -> 곱하기
 # 최소값 : 더하기 -> 나누기 -> 빼기 -> 곱하기
@@ -54,17 +54,17 @@ print(min_val)
 # 최소값 : (1-2-3)*4 = -16
 
 # # 최대값 계산
-# add, sub, mul, div = map(int, sig)
+# plus, minus, mul, div = map(int, sig)
 # max_result = numbers[0]
-# # sub(빼기 구호가) 있을 때와 없을 때를 구분해서 계산
-# if sub > 0:
+# # minus(빼기 구호가) 있을 때와 없을 때를 구분해서 계산
+# if minus > 0:
 #     for i in range(1, n):
-#         if sub > 0:
+#         if minus > 0:
 #             max_result -= numbers[i]
-#             sub -= 1
-#         elif add > 0:
+#             minus -= 1
+#         elif plus > 0:
 #             max_result += numbers[i]
-#             add -= 1
+#             plus -= 1
 #         elif div > 0:
 #             max_result = divide(max_result, numbers[i])
 #             div -= 1
@@ -77,29 +77,29 @@ print(min_val)
 #             max_result = divide(max_result, numbers[i])
 #             div -= 1
             
-#         elif add > 0:
+#         elif plus > 0:
 #             max_result += numbers[i]
-#             add -= 1
+#             plus -= 1
 #         elif mul > 0:
 #             max_result *= numbers[i]
 #             mul -= 1
 
 # # 최소값 계산
-# add, sub, mul, div = map(int, sig)
+# plus, minus, mul, div = map(int, sig)
 # min_result = numbers[0]
 
-# # sub(빼기 구호가) 있을 때와 없을 때를 구분해서 계산
-# if sub > 0:
+# # minus(빼기 구호가) 있을 때와 없을 때를 구분해서 계산
+# if minus > 0:
 #     for i in range(1, n):
-#         if add > 0:
+#         if plus > 0:
 #             min_result += numbers[i]
-#             add -= 1
+#             plus -= 1
 #         elif div > 0:
 #             min_result = divide(min_result, numbers[i])
 #             div -= 1
-#         elif sub > 0:
+#         elif minus > 0:
 #             min_result -= numbers[i]
-#             sub -= 1
+#             minus -= 1
 #         else:
 #             min_result *= numbers[i]
 # # 없으면 곱하기 -> 더하기 -> 나누기
@@ -108,9 +108,9 @@ print(min_val)
 #         if mul > 0:
 #             min_result *= numbers[i]
 #             mul -= 1
-#         elif add > 0:
+#         elif plus > 0:
 #             min_result += numbers[i]
-#             add -= 1
+#             plus -= 1
 #         elif div > 0:
 #             min_result = divide(min_result, numbers[i])
 #             div -= 1
