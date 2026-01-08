@@ -2,8 +2,10 @@
 
 # 특정 문자열이 n만큼 반복되는 문장 중 가장 짧은거 하나 긴거 하나
 # defaultdict 사용해서 넣으면 되나
+
 import sys
 from collections import defaultdict
+
 input = sys.stdin.readline
 max_value = sys.maxsize
 
@@ -17,7 +19,8 @@ for _ in range(t):
     max_count = 0
     result = False
     for i in range(len(string)):
-        spell_loc = count_dict[string[i]]
+        #특정 문자열의 위치를 defaultdict로 저장
+        spell_loc = count_dict[string[i]] 
         spell_loc += [i+1]
         if len(spell_loc) >= k:
             result = True
