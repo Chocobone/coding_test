@@ -10,27 +10,24 @@
 # 12
 # output : 3
 
+# sol2 : DP
+# dp[i] = min(dp[i-1], dp[i-v]+1)
+
 import sys
 input = sys.stdin.readline
+max_value = sys.maxsize
 
 n, k = map(int, input().split())
 coins = [int(input()) for _ in range(n)]
 
-from collections import deque
-Q = deque()
+coins = sorted(list(set(coins)))
 
-def bfs(h, k):
-    value = 0
-    if len(Q) != 0:
-        value += Q.popleft()
-    for coin in coins:
-        value += coin
+dp = [max_value] * (k+1)
+dp[0] = 0
 
-        if value < k:
-            Q.append(value)
+for v in coins:
+    for i in range(v, k+1):
+        if dp[i - v] != max_value:
+            dp[i] = min(dp[i], dp[i-v] + 1)
 
-        elif value == k:
-            
-    
-
-for _ in range(k//min(coins) + 1):
+print(dp[k] if dp[k] != max_value else -1)
