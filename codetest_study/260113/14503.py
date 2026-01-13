@@ -1,6 +1,3 @@
-# https://www.acmicpc.net/problem/14503
-# 로봇이 하는 행동을 구현해서 함수로 만들기
-# 북:0 동:1 남:2 서:3
 import sys
 input = sys.stdin.readline
 
@@ -10,43 +7,47 @@ room = []
 for _ in range(n):
     room.append(list(map(int, input().split())))
 
-clean_count = 0
+# 북 - 동 - 남 - 서
+dx = [-1, 0, 1, 0]
+dy = [0, 1, 0, -1]
+
 def cleaning(x, y, d):
-    global clean_count
-    # 1. 로봇 청소기 칸이 0이면 1로 만들어라(청소해라)
-    if room[x][y] == 0:
-        room[x][y] = 1
-        clean_count += 1
-        cleaning(x, y, d)
+    clean_count = 0
+    
+    while True:
+        # 1. 현재 위치 청소
+        if room[x][y] == 0:
+            room[x][y] = 2 # 청소를 했고 벽이 아님
+            clean_count += 1
 
-    else:
-        # 북 - 동 - 남 -서 순서로 정렬(시계)
-        dx = [0, 1, 0, -1]
-        dy = [1, 0, -1, 0]
-        #d = [0, 1, 2, 3]
+        # 2. 주변 4칸 탐색
+        cleaned_something = False # 이번 턴에 청소를 했는지 체크하는 깃발
+        
+        for _ in range(4):
+            # 2-a. 반시계 방향 회전 (0->3->2->1)
+            d = (d + 3) % 4
+            
+            mx = x + dx[d]
+            my = y + dy[d]
 
-        #2. 주위 4칸이 청소가 안되어 있다면 반시계 방향으로 회전하며 확인하라
-        not_cleaned = False
-        # 반시계 방향을 구현
-        for i in range(d, d+12, 3):
-            # 반시계방향 회전 -> +3을 한뒤 %4하면 구분 가능
-            mx = x + dx[i%4]
-            my = y + dy[i%4]
-
+            # 2-b. 앞쪽이 청소하지 않은 빈 칸이면 전진
             if 0 <= mx < n and 0 <= my < m and room[mx][my] == 0:
-                not_cleaned = True
-                d = i
-                break
-        if not_cleaned:
-            cleaning(mx, my, d)
-        else:
-            #바라보는 방향을 유지한 채로 '후진'
-            mx = x + dx[(d+2)%4]
-            my = y + dy[(d+2)%4]
-            if 0 <= mx < n and 0 <= my < m:
-                cleaning(mx, my, d)
-            else:
-                return
+                x, y = mx, my
+                cleaned_something = True
+                break # for문을 탈출하고 다시 1번 단계(while 처음)로 돌아감
 
-cleaning(x, y, d)
-print(clean_count)
+        # 3. 4칸 중 청소할 곳이 없었던 경우 (후진 로직)
+        if cleaned_something == False: # 
+            # 바라보는 방향 유지한 채로 후진 (빼기 연산)
+            bx = x - dx[d]
+            by = y - dy[d]
+            
+            # 뒤쪽이 벽이라 후진할 수 없으면 작동 멈춤
+            if room[bx][by] == 1:
+                break
+            else:
+                x, y = bx, by
+                
+    return clean_count
+
+print(cleaning(x, y, d))
