@@ -43,3 +43,4 @@ for _ in range(students_count):
 # 3. 출력 하기 (한 줄에 20개씩)
 for i in range(0, n, 20):
     print(*switch[i : i + 20])
+
