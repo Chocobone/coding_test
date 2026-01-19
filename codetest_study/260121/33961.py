@@ -5,7 +5,7 @@
 #    chessboard[1][N+2], chessboard[1][N+1]ㅁㄴㅇㄹ
 
 # sol1) 나이숍 투어가 가능한 경우를 분석
-# 3의 배수 가능
+# 3, 4, 5 가능 -> 1, 2 제외하고 %3한 값으로 계산하기
 
 def three(i):# 3 + 0
     print(1, 1+i)
@@ -39,24 +39,26 @@ def five(i): # 3 + 2
 
 n = int(input())
 
-if n == 2:
+if n == 1 or n == 2:
     print("NO")
 
+# 3, 6, 9, ...
 elif n%3 == 0:
     print("YES")
     for i in range(0, n, 3):
         three(i)
     
+# 4, 7, 10, ...
 elif n%3 == 1:
     print("YES")
     for i in range(0, n-6, 3):
         three(i)
     four(n-4)
 
-#else
+#5, 8, 11, ...
 elif n%3 == 2:
     print("YES")
     for i in range(0, n-7, 3):
         three(i)
-    four(n-5)
+    five(n-5)
     
