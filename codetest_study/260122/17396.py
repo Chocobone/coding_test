@@ -22,21 +22,6 @@ cant_backdoor = False
 visited = [[False] * n for _ in range(n)]
 
 def bfs(now):
-    #start[0] = Node, start[1] = time
-    start = path.popleft()
-    for end in range(n):
-
-        if ward[end] == 1 : 
-            visited[start[0]][end] = True
-        
-        if end == n and graph[start[0]][end] != 0:
-            if min_time > start[1]:
-                min_time = start[1]
-                cant_backdoor = False
-        if graph[start[0]][end] != INF and not visited[start[0]][end]:
-            start[1] += graph[start[0]][end]
-            visited[start[0]][end] = True
-            path.append([end, start[1]])
 
 
 print(0 if cant_backdoor else min_time)
