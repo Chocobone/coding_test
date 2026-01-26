@@ -3,24 +3,24 @@
 # 2. 
 
 import sys
-input = sys.stdin.readline
 
-txt = input().rstrip()
+txt = sys.stdin.readline().rstrip()
+
 big_open = 0
 small_open = 0
 big_close = 0
 small_close = 0
-
 result = 0
-for i in range(len(txt)):
-    if txt[i] == '(':
-        small_open += 1
-    elif txt[i] == '[':
-        big_open += 1
-    elif txt[i] == ')':
-        
-    elif txt[i] == ']':
 
-if big_open == 0 and small_open == 0:
-    print(result)
-else : print(0)
+# for i in range(len(txt)):
+#     if txt[i] == '(':
+#         small_open += 1
+#     elif txt[i] == '[':
+#         big_open += 1
+#     elif txt[i] == ')':
+        
+#     elif txt[i] == ']':
+
+# if big_open == 0 and small_open == 0:
+#     print(result)
+# else : print(0)
