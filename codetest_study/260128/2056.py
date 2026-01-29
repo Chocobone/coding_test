@@ -10,27 +10,26 @@ from collections import deque, defaultdict
 input = sys.stdin.readline
 
 N = int(input())
-graph = defaultdict(list)
-worklist = deque()
 
-time = [0] * (N+1)
+time = []
+require = defaultdict(list)
+sequence = deque()
+for _ in range(N):
+    node_info = list(map(int,input().split()))
+    time.append(node_info[0])
+    if node_info[1] > 0:
+        require[node_info[0]] += node_info[2:]
+    else: #실행 우선 순위 높음
+        sequence.append(node_info[0])
 
-# i는 이후 작업
-for i in range(1, N+1):
-    line = list(map(int, input().split()))
-    time[i] = line[0]
-    if line[1] > 0:
-        # j는 i를 하기 위해 필요한 이전 작업들
-        for j in range(2, 2 + line[1]):
-            graph[i].append(j)
-    else:
-        worklist.append(i)
-visited = [False] * (N+1)
-result = 0
 
-def rev_bfs():
-    global worklist
-    worklist.popleft()
+
+# N = int(input())
+# graph = defaultdict(list)
+# worklist = deque()
+
+# time = [0] * (N+1)
+
 # for i in range(1, N+1):
 #     line = list(map(int, input().split()))
 #     time[i] = line[0]
