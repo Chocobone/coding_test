@@ -1,7 +1,5 @@
 import sys
+input = sys.stdin.readline
 
-num = list(map(int, sys.stdin.readline().split()))
-num.sort()
-print(*num)
-
-
+sys.setrecursionlimit(10**6)
+sys.maxsize
