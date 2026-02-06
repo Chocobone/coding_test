@@ -1,3 +1,5 @@
+# https://www.acmicpc.net/problem/30618
+
 N = int(input())
 
 result = [0] * N

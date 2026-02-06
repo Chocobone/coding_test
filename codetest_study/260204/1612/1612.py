@@ -19,6 +19,11 @@ else:
             break
         num = (num * 10 + 1) % N
         length += 1
+        # num = '1'
+        # if int(num)%N == 0:
+            # find_num = True
+            # break
+        # num += '1'
 
 if find_num:
     print(length)
