@@ -1,11 +1,15 @@
 # https://www.acmicpc.net/problem/30618
 
-N = int(input())
+import sys
+from collections import deque
 
-result = [0] * N
-if N%2 == 0:
-    for i in range(N):
+n = int(sys.stdin.readline())
+dq = deque()
 
 
-
-print(result)
+for i in range(n, 0, -1):
+    if (n - i) % 2 == 0:
+        dq.appendleft(i)
+    else:
+        dq.append(i)
+print(*dq)

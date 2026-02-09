@@ -8,3 +8,4 @@ import sys
 input = sys.stdin.readline
 
 seat = [list(input().rstrip()) for _ in range(5)]
+
