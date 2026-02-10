@@ -22,7 +22,38 @@ for _ in range(N):
     else: #실행 우선 순위 높음
         sequence.append(node_info[0])
 
+import sys
+input = sys.stdin.readline
 
+# N 입력
+N = int(input())
+
+# dp[i]: i번 작업이 완료될 때까지 걸리는 최소 시간
+# 인덱스 편의를 위해 N+1 크기로 생성
+dp = [0] * (N + 1)
+
+for i in range(1, N + 1):
+    # 입력: 시간, 선행작업 개수, 선행작업 번호들...
+    info = list(map(int, input().split()))
+    
+    time = info[0]
+    pre_count = info[1]
+    
+    # 선행 작업이 없는 경우
+    if pre_count == 0:
+        dp[i] = time
+    else:
+        # 선행 작업들 중 가장 늦게 끝나는 시간(max)을 찾아서 더함
+        # info[2:]가 선행 작업들의 번호 리스트임
+        max_pre_time = 0
+        for pre_task in info[2:]:
+            max_pre_time = max(max_pre_time, dp[pre_task])
+        
+        dp[i] = max_pre_time + time
+
+# 모든 작업이 다 끝나야 하므로, dp 배열 중 가장 큰 값이 정답
+# (마지막 N번 작업이 꼭 가장 늦게 끝난다는 보장이 없으므로 max(dp)여야 함)
+print(max(dp))
 
 # N = int(input())
 # graph = defaultdict(list)
