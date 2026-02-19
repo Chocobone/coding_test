@@ -6,24 +6,18 @@ input = sys.stdin.readline
 n = int(input())
 port = list(map(int, input().split()))
 
-m = 0
-for i in port:
-    m += i
+port.sort()
 
-average = m//n
+m = sum(port)
+average = m // n
+r = m % n   # average+1을 가져야 하는 사람 수
+
 move = 0
-if m%n == 0:
-    for i in port:
-        move += abs(average - i)
-else:
-    # 평균으로 나눴을 때의 나머지들
-    one_left = m%n
 
-    for i in port:
-        if one_left > 0:
-            if average < i:
-                move += abs(average - i + 1)
-                one_left -= 1
-        else:
-            move += abs(average - i)
-print((move+1)//2)
+for i in range(n):
+    if i < n - r:
+        move += abs(port[i] - average)
+    else:
+        move += abs(port[i] - (average + 1))
+
+print(move // 2)
