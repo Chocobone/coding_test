@@ -2,11 +2,12 @@
 
 import sys
 input = sys.stdin.readline
+from collections import defaultdict
 sys.setrecursionlimit(10**6)
 
 
 N, R1, R2 = map(int, input().split())
-graph = [[-1] * (N+1) for _ in range(N+1)]
+graph = defaultdict(lambda: [-1] * (N+1))
 for _ in range(N-1):
     a, b, c = map(int, input().split())
     graph[a][b] = c
