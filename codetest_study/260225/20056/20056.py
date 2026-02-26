@@ -33,7 +33,7 @@ def water_copy(clouds):
             nx = x + dcol[i]
             ny = y + drow[i]
             if 0 <= nx < N and 0 <= ny < N and Mat[nx][ny] > 0:
-                if Mat[nx][ny] > 0: count += 1
+                count += 1
         Mat[x][y] += count
 
 # 5. 새로운 구름

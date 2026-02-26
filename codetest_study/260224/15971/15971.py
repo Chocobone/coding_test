@@ -1,31 +1,37 @@
 #https://www.acmicpc.net/problem/15971
 
 import sys
+from collections import deque
 input = sys.stdin.readline
-from collections import defaultdict
-sys.setrecursionlimit(10**6)
-
 
 N, R1, R2 = map(int, input().split())
-graph = defaultdict(lambda: [-1] * (N+1))
-for _ in range(N-1):
+
+# 인접 리스트로 그래프 초기화 (메모리 최적화)
+graph = [[] for _ in range(N + 1)]
+
+# 간선 정보 입력
+for _ in range(N - 1):
     a, b, c = map(int, input().split())
-    graph[a][b] = c
-    graph[b][a] = c
-visited = [0] * (N+1)
-max_dist = 0
+    graph[a].append((b, c))
+    graph[b].append((a, c))
+    
+# BFS 탐색 함수
+def bfs(start, end):
+    queue = deque([(start, 0, 0)])
+    visited = [False] * (N + 1)
+    visited[start] = True
+    
+    while queue:
+        curr, total_dist, max_edge = queue.popleft()
+        if curr == end:
+            return total_dist - max_edge
+            
+        # 인접한 노드 탐색
+        for next_node, cost in graph[curr]:
+            if not visited[next_node]:
+                visited[next_node] = True
+                queue.append((next_node, total_dist + cost, max(max_edge, cost)))
+                
+    return 0
 
-def dfs(start, end):
-    global max_dist
-    visited[start] = 1
-    if start == end:
-        return 0
-    for i in range(1, N+1):
-        if graph[start][i] != -1 and visited[i] == 0:
-            result = dfs(i, end)
-            if result != -1:
-                max_dist = max(max_dist, graph[start][i])
-                return result + graph[start][i]
-    return -1
-
-print(dfs(R1, R2) - max_dist)
+print(bfs(R1, R2))
